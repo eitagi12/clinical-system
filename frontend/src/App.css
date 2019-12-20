@@ -1,0 +1,15 @@
+
+.header{
+  width: 100%;
+  height: auto;
+}
+
+.leftBar{
+  background-color:#1976d2;
+  height: 100vh;
+}
+
+.rightBar{
+  background-color:#1976d2;
+  height: 100vh;
+}
