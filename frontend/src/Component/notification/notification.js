@@ -18,4 +18,13 @@ const successLoginNotification = () => {
     });
   };
 
- export  {successLoginNotification,failLoginNotification}
+  const successCreatePatientNotification = () => {
+    notification.open({
+      message: 'ลงทะเบียนผู้ป่วยสำเร็จ',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
+
+
+
+ export  {successLoginNotification,failLoginNotification,successCreatePatientNotification}

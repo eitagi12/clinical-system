@@ -1,16 +1,51 @@
 import React, { Component } from "react";
-import { Row, Col, Layout, Menu, List, Button } from "antd";
+import { Row, Col, Layout, Menu, List, Button, Input } from "antd";
 import { Link } from "react-router-dom";
-import Search from "antd/lib/input/Search";
+import Axios from "../../config/axios.setup";
 const { Footer } = Layout;
 
+
+
 export default class DrugAndFinance extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data : [],
+      firstName:"",
+      lastName:"",
+        
+    };
+  }
+
+  // componentDidMount () {
+  //   Axios.get("http://localhost:8080/getpatients").then(result => {
+  //     this.setState({
+  //       data: result.data
+  //     });
+  //   });
+  // }
+
+ handleSearch = e =>{
+  Axios.get("http://localhost:8080/getpatients", {
+    firstname: this.state.firstName,
+    lastname: this.state.lastName
+    }).than(result =>{
+      console.log(result)
+      // Axios.get("http://localhost:8080/getpatients").then(result => {
+      // this.setState({
+      //   data: result.data
+      // });
+    // })
+    }).catch(err => {
+      console.error(err);
+    });
+  };
+
+
+
+
   render() {
-    const data = [
-      "นายเมธา บ้าไปแล้ว",
-      "นายเต็น เป็นเทพไปแล้ว",
-      "นายสวัสดี ประเทศไทย"
-    ];
+
     return (
       <div>
         <div>
@@ -50,13 +85,27 @@ export default class DrugAndFinance extends Component {
                   <Row style={{ marginTop: "10px" }}>
                     <Col span={4}></Col>
                     <Col span={16}>
-                      <h1>ค้นหาประวัติผู้ป่วย</h1>
-                      <Search
-                        placeholder="โปรดกรอกชื่อ-นามสกุลผู้ป่วย"
-                        enterButton="ค้นหา"
-                        size="large"
-                        onSearch={value => console.log(value)}
-                      />
+                      <Row>
+                        <h1>ค้นหาประวัติผู้ป่วย</h1>
+                      <Col span={10}>
+                      <Input placeholder="โปรดกรอกชื่อ"
+                      onChange={e =>
+                        this.setState({ firstName: e.target.value })
+                      }
+                    />
+                      </Col>
+                      <Col span={10}>
+                      <Input placeholder="โปรดกรอกนามสกุล"
+                      onChange={e =>
+                        this.setState({ lastName: e.target.value })
+                      }
+                    />
+                      </Col>
+                      <Col span={4}>
+                      <Button type="primary" onClick={this.handleSearch} >ค้นหา</Button>
+                      </Col>
+                      </Row>
+                      
                     </Col>
                     <Col span={4} style={{ marginTop: "10px" }}>
                       <Link to="/createpatient">
@@ -67,14 +116,14 @@ export default class DrugAndFinance extends Component {
                 </div>
               </Row>
 
-              <Row type="flex" align="center" style={{ margin: "20px" }}>
+              <Row type="flex" align="middle" style={{ margin: "20px" }}>
                 <Col span={6} style={{ margin: "10px" }}>
                   <div className="patientListBox">
                     <List
                       size="large"
                       header={<h1>รายชื่อผู้ป่วย</h1>}
                       bordered
-                      dataSource={data}
+                      dataSource={this.state.data}
                       renderItem={item => <List.Item>{item}</List.Item>}
                     />
                   </div>

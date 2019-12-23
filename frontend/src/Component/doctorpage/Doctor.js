@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Col,Layout, Row, Menu } from "antd";
+import { Col,Layout, Row, Menu, Button } from "antd";
+import { Link } from "react-router-dom"; 
 
 const { Footer } = Layout;
 
@@ -41,7 +42,9 @@ export default class Doctor extends Component {
           </Col>
 
           <Col className="rightBar" span={3}>
-            
+          <Row style={{display:'flex', justifyContent:'center', margin:'10px'}}>
+                <Col><Link to="/login"><Button>กลับหน้าเข้าสู่ระบบ</Button></Link></Col>
+              </Row>
           </Col>
         </Row>
       </div>
