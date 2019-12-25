@@ -51,7 +51,8 @@ module.exports = (app, db) => {
         res.status(200).send({
           auth: true,
           token,
-          message: 'user found & logged in'
+          message: 'user found & logged in',
+          role: user.role
         })
       }
     })(req, res, next)

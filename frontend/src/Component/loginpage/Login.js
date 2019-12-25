@@ -10,7 +10,8 @@ class Login extends Component {
     super(props)
     this.state ={
       username: '',
-      password: ''
+      password: '',
+      role: ''
     }
   }
   handleSubmit= (e) =>{
@@ -18,12 +19,24 @@ class Login extends Component {
     e.preventDefault()
     const username = this.state.username
     const password = this.state.password
-    Axios.post('http://localhost:8080/loginUser',{username, password})
+    const role = this.state.role
+    Axios.post('http://localhost:8080/loginUser',{username, password, role})
     .then(result => {
+      if (result.data.role === "nurse") {
+        console.log(result)
       successLoginNotification ()
       console.log(result.data)
       localStorage.setItem("Access_TOKEN", result.data.token)
       this.props.history.push("/nursepatient")
+      }else {
+        console.log(result)
+      successLoginNotification ()
+      console.log(result.data)
+      localStorage.setItem("Access_TOKEN", result.data.token)
+      this.props.history.push("/doctor")
+      }
+          
+    
     })
     .catch(err=> {
       console.error(err);
@@ -55,7 +68,7 @@ class Login extends Component {
             <div className="loginBox" >
 <h1>เข้าสู่ระบบ</h1>
 <div
-class="divLogin"
+className="divLogin"
 style={{
   display: "flex",
   justifyContent: "center",

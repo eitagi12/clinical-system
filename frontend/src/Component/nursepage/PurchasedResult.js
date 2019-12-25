@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Layout, Result, Button } from "antd";
+import { Result, Button } from "antd";
 import { Link } from "react-router-dom";
-const { Footer } = Layout;
+
 
 export default class PurchasedResult extends Component {
   render() {

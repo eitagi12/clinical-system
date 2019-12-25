@@ -18,4 +18,28 @@ const successLoginNotification = () => {
     });
   };
 
- export  {successLoginNotification,failLoginNotification}
+  const successCreatePatientNotification = () => {
+    notification.open({
+      message: 'ลงทะเบียนผู้ป่วยสำเร็จ',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
+
+  const successfoundNotification = () => {
+    notification.open({
+      message: 'เพิ่มผู้ป่วยลงในรายชื่อผู้ป่วยสำเร็จ',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
+
+  const patientNotfoundNotification = (message) => {
+    notification.open({
+      message: 'หาข้อมูลผู้ป่วยไม่พบ',
+      description: 'โปรดตรวจสอบชื่อและนามสกุลผู้ป่วย',
+      icon: <Icon type="close" style={{ color: '#dc4d4d' }} />,
+    });
+  };
+
+
+
+ export  {successLoginNotification,failLoginNotification,successCreatePatientNotification,patientNotfoundNotification,successfoundNotification}

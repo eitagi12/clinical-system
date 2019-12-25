@@ -1,16 +1,63 @@
 import React, { Component } from "react";
-import { Row, Col, Layout, Menu, List, Button } from "antd";
+import Axios from "../../config/axios.setup";
+import { Row, Col, Layout, Menu, List, Button, Input } from "antd";
 import { Link } from "react-router-dom";
-import Search from "antd/lib/input/Search";
+import {
+  patientNotfoundNotification,
+  successfoundNotification
+} from "../notification/notification.js";
+
 const { Footer } = Layout;
 
-export default class DrugAndFinance extends Component {
+export default class PatientPersonalData extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      patientData: [],
+      firstName: "",
+      lastName: ""
+    };
+  }
+
+  // componentDidMount () {
+  //   Axios.get("http://localhost:8080/getpatients").then(result => {
+  //     this.setState({
+  //       data: result.data
+  //     });
+  //   });
+  // }
+
+  handleSearch = () => {
+    Axios.post("http://localhost:8080/getpatients", {
+      firstname: this.state.firstName,
+      lastname: this.state.lastName
+    })
+      .then(result => {
+        const resultFirstname = result.data[0].firstname;
+        const resultLastname = result.data[0].lastname;
+        const nowPatiensData = this.state.patientData
+        if (
+          resultFirstname === this.state.firstName &&
+          resultLastname === this.state.lastName &&
+          resultFirstname !== "" &&
+          resultLastname !== "" &&
+          resultFirstname !== nowPatiensData.firstName
+        ) {
+          this.setState((state) => ({
+            patientData: [...state.patientData, ...result.data]
+            // patientData: state.patientData.concat(result.data)
+          }));
+          // console.log(this.state.patientData);
+          successfoundNotification();
+        }
+      })
+      .catch(err => {
+        console.error("User not found");
+        patientNotfoundNotification();
+      });
+  };
+
   render() {
-    const data = [
-      "นายเมธา บ้าไปแล้ว",
-      "นายเต็น เป็นเทพไปแล้ว",
-      "นายสวัสดี ประเทศไทย"
-    ];
     return (
       <div>
         <div>
@@ -50,13 +97,30 @@ export default class DrugAndFinance extends Component {
                   <Row style={{ marginTop: "10px" }}>
                     <Col span={4}></Col>
                     <Col span={16}>
-                      <h1>ค้นหาประวัติผู้ป่วย</h1>
-                      <Search
-                        placeholder="โปรดกรอกชื่อ-นามสกุลผู้ป่วย"
-                        enterButton="ค้นหา"
-                        size="large"
-                        onSearch={value => console.log(value)}
-                      />
+                      <Row>
+                        <h1>ค้นหาประวัติผู้ป่วย</h1>
+                        <Col span={10}>
+                          <Input
+                            placeholder="โปรดกรอกชื่อ"
+                            onChange={e =>
+                              this.setState({ firstName: e.target.value })
+                            }
+                          />
+                        </Col>
+                        <Col span={10}>
+                          <Input
+                            placeholder="โปรดกรอกนามสกุล"
+                            onChange={e =>
+                              this.setState({ lastName: e.target.value })
+                            }
+                          />
+                        </Col>
+                        <Col span={4}>
+                          <Button type="primary" onClick={this.handleSearch}>
+                            ค้นหา
+                          </Button>
+                        </Col>
+                      </Row>
                     </Col>
                     <Col span={4} style={{ marginTop: "10px" }}>
                       <Link to="/createpatient">
@@ -67,15 +131,27 @@ export default class DrugAndFinance extends Component {
                 </div>
               </Row>
 
-              <Row type="flex" align="center" style={{ margin: "20px" }}>
+              <Row type="flex" style={{ margin: "20px" }}>
                 <Col span={6} style={{ margin: "10px" }}>
                   <div className="patientListBox">
                     <List
                       size="large"
                       header={<h1>รายชื่อผู้ป่วย</h1>}
                       bordered
-                      dataSource={data}
-                      renderItem={item => <List.Item>{item}</List.Item>}
+                      dataSource={this.state.patientData}
+                      renderItem={item => (
+                        <Row>
+                          <List.Item>
+                            <Col span={10}>{item.firstname}</Col>
+                            <Col span={10}>{item.lastname}</Col>
+                            <Col span={4}>
+                              <Button>
+                                <i className="fas fa-arrow-right"></i>
+                              </Button>
+                            </Col>
+                          </List.Item>
+                        </Row>
+                      )}
                     />
                   </div>
                 </Col>
@@ -102,10 +178,19 @@ export default class DrugAndFinance extends Component {
             </Col>
 
             <Col className="rightBar" span={3}>
-              <Row style={{display:'flex', justifyContent:'center', margin:'10px'}}>
-                <Col><Link to="/login"><Button>กลับหน้าเข้าสู่ระบบ</Button></Link></Col>
+              <Row
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "10px"
+                }}
+              >
+                <Col>
+                  <Link to="/login">
+                    <Button>กลับหน้าเข้าสู่ระบบ</Button>
+                  </Link>
+                </Col>
               </Row>
-            
             </Col>
           </Row>
         </div>
