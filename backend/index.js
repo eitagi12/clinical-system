@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const db = require('./models')
 const userService = require('./services/user')
-// const patientService = require('./services/patients')
+const patientService = require('./services/patients')
 // const postService = require('./services/post')
 const cors = require('cors')
 
@@ -25,7 +25,7 @@ require('./config/passport/passport')
 
 db.sequelize.sync({ force: false }).then(() => {
   userService(app, db);
-  // patientService(app, db);
+  patientService(app, db);
 //   postService(app, db);
 
   app.listen(8080, () => console.log("Server is running on port 8080"))
