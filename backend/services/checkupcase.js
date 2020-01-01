@@ -3,18 +3,19 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 module.exports = (app, db) => {
-  app.post("/createpatients", function(req, res) {
-    db.patients
+  app.post("/createcheckupcase", function(req, res) {
+    db.checkupcase
       .create({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        birthday: req.body.birthday,
-        address: req.body.address,
-        phone_number: req.body.phone_number,
-        phone_number_emergency: req.body.phone_number_emergency,
         congenital_disease: req.body.congenital_disease,
         allergic_medicine: req.body.allergic_medicine,
-        blood_type: req.body.blood_type
+        blood_type: req.body.blood_type,
+        weight: req.body.weight,
+        height: req.body.height,
+        temperature: req.body.temperature,
+        pressure: req.body.pressure,
+
       })
       .then(result => {
         res.status(201).send("Created");
@@ -24,10 +25,10 @@ module.exports = (app, db) => {
       });
   });
 
-  app.post("/getpatients", function(req, res) {
-    db.patients
+  app.post("/getcheckupcase", function(req, res) {
+    db.checkupcase
       .findAll({
-        where: { firstname: req.body.firstname, lastname: req.body.lastname },
+        
         attribute: [ "id", "firstname", "lastname"]
       })
       .then(result => {
@@ -38,8 +39,8 @@ module.exports = (app, db) => {
       });
   });
 
-  app.get("/patientDetail/:id", function(req, res) {
-    db.patients
+  app.get("/getPatientDetail/:id", function(req, res) {
+    db.checkupcase
       .findAll({
         where: { id: req.params.id }
       })
@@ -51,3 +52,6 @@ module.exports = (app, db) => {
       });
   });
 };
+
+
+

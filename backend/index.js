@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const db = require('./models')
 const userService = require('./services/user')
 const patientService = require('./services/patients')
+const checkupCase = require('./services/checkupcase')
 // const postService = require('./services/post')
 const cors = require('cors')
 
@@ -23,9 +24,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // import config of passport
 require('./config/passport/passport')
 
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ alter: true }).then(() => {
   userService(app, db);
   patientService(app, db);
+  checkupCase(app, db);
 //   postService(app, db);
 
   app.listen(8080, () => console.log("Server is running on port 8080"))

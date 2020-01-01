@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Icon, Input, Button, Checkbox,Row,Col,Layout } from "antd";
+import { Form, Icon, Input, Button ,Row,Col,Layout } from "antd";
 import "./login.css";
 import Axios from '../../config/axios.setup'
 import {successLoginNotification,failLoginNotification} from '../../Component/notification/notification'
@@ -28,12 +28,18 @@ class Login extends Component {
       console.log(result.data)
       localStorage.setItem("Access_TOKEN", result.data.token)
       this.props.history.push("/nursepatient")
-      }else {
+      }else if(result.data.role === "doctor"){
         console.log(result)
       successLoginNotification ()
       console.log(result.data)
       localStorage.setItem("Access_TOKEN", result.data.token)
       this.props.history.push("/doctor")
+      }else {
+        console.log(result)
+        successLoginNotification ()
+        console.log(result.data)
+        localStorage.setItem("Access_TOKEN", result.data.token)
+        this.props.history.push("/admin")
       }
           
     
@@ -108,11 +114,7 @@ style={{
     )}
   </Form.Item>
   <Form.Item>
-    {getFieldDecorator("remember", {
-      valuePropName: "checked",
-      initialValue: true
-    })(<Checkbox>จดจำฉันในระบบ</Checkbox>)}
-    <br/>
+    
     <Button
       type="primary"
       htmlType="submit"

@@ -40,6 +40,12 @@ const successLoginNotification = () => {
     });
   };
 
+  const duplicatePatientNotification = (message) => {
+    notification.open({
+      message: 'มีชื่อผู้ป่วยนี้ในรายชื่อแล้ว',
+      icon: <Icon type="close" style={{ color: '#dc4d4d' }} />,
+    });
+  };
 
 
- export  {successLoginNotification,failLoginNotification,successCreatePatientNotification,patientNotfoundNotification,successfoundNotification}
+ export  {successLoginNotification,failLoginNotification,successCreatePatientNotification,patientNotfoundNotification,successfoundNotification,duplicatePatientNotification}
