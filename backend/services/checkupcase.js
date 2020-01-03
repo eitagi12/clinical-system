@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 module.exports = (app, db) => {
-  app.post("/createcheckupcase", function(req, res) {
+  app.post("/createcheckupcase",passport.authenticate('jwt', { session: false }), function(req, res) {
     db.checkupcase
       .create({
         firstname: req.body.firstname,
@@ -25,7 +25,7 @@ module.exports = (app, db) => {
       });
   });
 
-  app.post("/getcheckupcase", function(req, res) {
+  app.post("/getcheckupcase",passport.authenticate('jwt', { session: false }), function(req, res) {
     db.checkupcase
       .findAll({
         
@@ -39,7 +39,7 @@ module.exports = (app, db) => {
       });
   });
 
-  app.get("/getPatientDetail/:id", function(req, res) {
+  app.get("/getPatientDetail/:id",passport.authenticate('jwt', { session: false }), function(req, res) {
     db.checkupcase
       .findAll({
         where: { id: req.params.id }
@@ -51,6 +51,25 @@ module.exports = (app, db) => {
         res.status(400).send({ message: err.message });
       });
   });
+
+  app.delete("/deletepatientcase/:id",passport.authenticate('jwt', { session: false }), function(req, res) {
+    db.checkupcase
+      .destroy({
+        where: { id: req.params.id}
+      })
+      .then(results => {
+        res.status(200).send("Delete La");
+      })
+      .catch(err => {
+        res.status(400).send({ message: err.message });
+      });
+  });
+
+  app.get('/protected-route', passport.authenticate('jwt', { session: false }),
+    function (req, res) {
+      res.status(200).send(req.user)
+    }
+  )
 };
 
 

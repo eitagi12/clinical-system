@@ -3,8 +3,12 @@ const bodyParser = require('body-parser')
 const db = require('./models')
 const userService = require('./services/user')
 const patientService = require('./services/patients')
-const checkupCase = require('./services/checkupcase')
-// const postService = require('./services/post')
+const checkupCaseService = require('./services/checkupcase')
+const medicinesService = require('./services/medicines')
+const medicinesInvoicesService = require('./services/medicinesInvoice')
+const invoicesService = require('./services/invoices')
+const paidInvoiceService = require('./services/paidInvoice')
+
 const cors = require('cors')
 
 const app = express()
@@ -27,8 +31,12 @@ require('./config/passport/passport')
 db.sequelize.sync({ alter: true }).then(() => {
   userService(app, db);
   patientService(app, db);
-  checkupCase(app, db);
-//   postService(app, db);
+  checkupCaseService(app, db);
+  medicinesService(app, db);
+  medicinesInvoicesService(app, db)
+  invoicesService(app, db);
+  // paidInvoiceService(app, db)
+
 
   app.listen(8080, () => console.log("Server is running on port 8080"))
 })

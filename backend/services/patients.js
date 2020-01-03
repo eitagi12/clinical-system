@@ -1,9 +1,10 @@
-const passport = require("passport");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+const passport = require('passport')
+
 
 module.exports = (app, db) => {
-  app.post("/createpatients", function(req, res) {
+  app.post("/createpatients",passport.authenticate('jwt', { session: false }), function(req, res) {
     db.patients
       .create({
         firstname: req.body.firstname,
@@ -24,7 +25,7 @@ module.exports = (app, db) => {
       });
   });
 
-  app.post("/getpatients", function(req, res) {
+  app.post("/getpatients",passport.authenticate('jwt', { session: false }), function(req, res) {
     db.patients
       .findAll({
         where: { firstname: req.body.firstname, lastname: req.body.lastname },
@@ -38,7 +39,7 @@ module.exports = (app, db) => {
       });
   });
 
-  app.get("/patientDetail/:id", function(req, res) {
+  app.get("/patientDetail/:id",passport.authenticate('jwt', { session: false }), function(req, res) {
     db.patients
       .findAll({
         where: { id: req.params.id }
@@ -50,4 +51,13 @@ module.exports = (app, db) => {
         res.status(400).send({ message: err.message });
       });
   });
+
+  app.get('/protected-route', passport.authenticate('jwt', { session: false }),
+    function (req, res) {
+      res.status(200).send(req.user)
+    }
+  )
+
 };
+
+

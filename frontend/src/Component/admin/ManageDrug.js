@@ -45,6 +45,7 @@ export default class ManageDrug extends Component {
                       ></img>
                     </div>
                   </Row>
+                  
                   <Row >
                     <Col>
                     
@@ -53,6 +54,7 @@ export default class ManageDrug extends Component {
                     
                     </Col>
                   </Row>
+
                   <Row>
                     <Footer>
                       สงวนลิขสิทธิ์ © 2562 บริษัท นัทฮัฟเฟิลพัพ (ประเทศไทย)

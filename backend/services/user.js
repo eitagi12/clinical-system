@@ -18,7 +18,7 @@ module.exports = (app, db) => {
           birthday: req.body.birthday,
           address: req.body.address,
           phone_number: req.body.phone_number,
-          role: req.body.role
+          role: 3
         })
           .then(() => {
             console.log('user created in db')

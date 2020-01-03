@@ -40,6 +40,13 @@ const successLoginNotification = () => {
     });
   };
 
+  const sendPatientfoundNotification = (message) => {
+    notification.open({
+      message: 'ส่งผู้ป่วยเข้าห้องตรวจเรียบร้อย',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
+
   const duplicatePatientNotification = (message) => {
     notification.open({
       message: 'มีชื่อผู้ป่วยนี้ในรายชื่อแล้ว',
@@ -47,5 +54,12 @@ const successLoginNotification = () => {
     });
   };
 
+  const confirmDoctorNotification = (message) => {
+    notification.open({
+      message: 'ยืนยันการตรวจสำเร็จ',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
 
- export  {successLoginNotification,failLoginNotification,successCreatePatientNotification,patientNotfoundNotification,successfoundNotification,duplicatePatientNotification}
+
+ export  {successLoginNotification,failLoginNotification,successCreatePatientNotification,patientNotfoundNotification,successfoundNotification,duplicatePatientNotification,confirmDoctorNotification,sendPatientfoundNotification}

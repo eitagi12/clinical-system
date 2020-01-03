@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import {
   patientNotfoundNotification,
   successfoundNotification,
-  duplicatePatientNotification
+  duplicatePatientNotification,
+  sendPatientfoundNotification
 } from "../notification/notification.js";
 
 const { Footer } = Layout;
@@ -99,6 +100,8 @@ class PatientPersonalData extends Component {
         Axios.post("http://localhost:8080/createcheckupcase", payload)
           .then(result => {
             console.log(result.data);
+            this.props.form.resetFields();
+            sendPatientfoundNotification()
           })
           .catch(err => {
             console.error(err);

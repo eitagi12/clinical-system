@@ -1,20 +1,38 @@
 import React, { Component } from "react";
-import { Col, Layout, Row, Menu, Button, List, Card, Input } from "antd";
+import {
+  Col,
+  Layout,
+  Row,
+  Menu,
+  Button,
+  List,
+  Card,
+  Input,
+  Select,
+  Form
+} from "antd";
 import { Link } from "react-router-dom";
 import Axios from "../../config/axios.setup";
+import { confirmDoctorNotification } from "../notification/notification.js";
 
 const { Footer } = Layout;
 const { TextArea } = Input;
+const { Option } = Select;
 
-export default class Doctor extends Component {
+class Doctor extends Component {
   constructor(props) {
     super(props);
     this.state = {
       waittingPatientData: [],
-      conclusionPatientData: []
+      conclusionPatientData: [],
+      medicinesData: [],
+      selectedMedicineData: [],
+      nameMedicine: "",
+      diagnose: "",
+      amount: "",
+      currentPatientId: null
     };
   }
-
 
   fetchData = () => {
     Axios.post("http://localhost:8080/getcheckupcase").then(result => {
@@ -25,8 +43,18 @@ export default class Doctor extends Component {
     });
   };
 
+  fetchMedicine = () => {
+    Axios.post("http://localhost:8080/getmedicine").then(result => {
+      this.setState({
+        medicinesData: result.data
+      });
+      console.log(this.state.medicinesData);
+    });
+  };
+
   componentDidMount() {
-    this.fetchData()
+    this.fetchData();
+    this.fetchMedicine();
     var intervalId = setInterval(this.fetchData, 5000);
     // store intervalId in the state so it can be accessed later:
     this.setState({ intervalId: intervalId });
@@ -40,12 +68,76 @@ export default class Doctor extends Component {
   handleShowConPatient = id => {
     console.log("errrrrrrrrrrrrr");
     Axios.get(`/getPatientDetail/${id}`).then(result => {
-      this.setState({ conclusionPatientData: result.data });
+      this.setState({
+        conclusionPatientData: result.data,
+        currentPatientId: id
+      });
       console.log(result.data);
     });
   };
 
+  handleAddMedicine = () => {
+    Axios.post("http://localhost:8080/getspacificmedicine", {
+      name: this.state.nameMedicine
+    })
+      .then(result => {
+        this.setState(state => ({
+          selectedMedicineData: [...state.selectedMedicineData, ...result.data]
+        }));
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+
+  handleConfirmDoctor = e => {
+    e.preventDefault();
+
+    this.props.form.validateFieldsAndScroll((err, data) => {
+      if (!err) {
+        console.log(data);
+        let medicinesList = [];
+
+        Object.keys(data).map(key => {
+          medicinesList.push({
+            id: key,
+            amount: data[key]
+          });
+        });
+
+        console.log(medicinesList);
+
+        Axios.post("http://localhost:8080/createmedicineinvoice", {
+          firstname: this.state.conclusionPatientData[0].firstname,
+          lastname: this.state.conclusionPatientData[0].lastname,
+          diagnose: this.state.diagnose,
+          medicinesList: medicinesList
+        })
+          .then(result => {
+            Axios.delete(
+              `http://localhost:8080/deletepatientcase/${this.state.currentPatientId}`
+            );
+            this.props.form.resetFields();
+            this.setState({
+              conclusionPatientData: [],
+              selectedMedicineData: [],
+              currentPatientId: null
+            });
+
+            console.log(result.data);
+            console.log(this.state.selectedMedicineData);
+            confirmDoctorNotification();
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    });
+  };
+
   render() {
+    const { getFieldDecorator } = this.props.form;
+
     return (
       <div>
         <div>
@@ -146,18 +238,109 @@ export default class Doctor extends Component {
                                 <Row>
                                   <Col span={24}>
                                     <span>วินัยฉัยโรค</span>
-                                    <TextArea rows={4} />
+                                    <TextArea
+                                      onChange={e =>
+                                        this.setState({
+                                          diagnose: e.target.value
+                                        })
+                                      }
+                                      rows={4}
+                                    />
                                   </Col>
                                 </Row>
                                 <hr />
 
                                 <Row>
-                                <Col span={24}>
-                                  <span>รายการจ่ายยา</span>
-                                  <TextArea rows={4} />
-                                </Col>
+                                  <Col span={12}>
+                                    <span>จ่ายยา</span>
+                                    <Row>
+                                      <Col span={16}>
+                                        <Select
+                                          defaultValue="ชื่อยา"
+                                          style={{ width: "100%" }}
+                                          onChange={value =>
+                                            this.setState({
+                                              nameMedicine: `${value}`
+                                            })
+                                          }
+                                        >
+                                          {this.state.medicinesData.map(x => (
+                                            <Option value={x.name}>
+                                              {x.name}
+                                            </Option>
+                                          ))}
+                                        </Select>
+                                      </Col>
+                                    </Row>
+                                    <Row style={{ marginTop: "5px" }}>
+                                      <Button onClick={this.handleAddMedicine}>
+                                        เพิ่มยา
+                                      </Button>
+                                    </Row>
+                                  </Col>
+                                  <Col span={12}>
+                                    <Form onSubmit={this.handleConfirmDoctor}>
+                                      <Row>
+                                        <span>รายการยา</span>
+                                        <List
+                                          size="large"
+                                          bordered
+                                          dataSource={
+                                            this.state.selectedMedicineData
+                                          }
+                                          renderItem={item => (
+                                            <Row>
+                                              <Form.Item>
+                                                <List.Item>
+                                                  <Col span={12}>
+                                                    {item.name}
+                                                  </Col>
+                                                  <Col
+                                                    span={12}
+                                                    style={{
+                                                      textAlign: "center"
+                                                    }}
+                                                  >
+                                                    <span>จำนวน</span>
+                                                    {getFieldDecorator(
+                                                      "" + item.id,
+                                                      {
+                                                        rules: [
+                                                          {
+                                                            required: true,
+                                                            message:
+                                                              "Please input amount"
+                                                          }
+                                                        ]
+                                                      }
+                                                    )(
+                                                      <Input
+                                                        style={{
+                                                          width: "50%",
+                                                          marginLeft: "10px"
+                                                        }}
+                                                      />
+                                                    )}
+                                                  </Col>
+                                                </List.Item>
+                                              </Form.Item>
+                                            </Row>
+                                          )}
+                                        />
+                                      </Row>
+                                      <Row
+                                        style={{
+                                          textAlign: "center",
+                                          marginTop: "10px"
+                                        }}
+                                      >
+                                        <Button htmlType="submit">
+                                          ยืนยันการตรวจ
+                                        </Button>
+                                      </Row>
+                                    </Form>
+                                  </Col>
                                 </Row>
-
                               </Col>
                             </Row>
                           ))}
@@ -196,3 +379,5 @@ export default class Doctor extends Component {
     );
   }
 }
+
+export default Form.create()(Doctor);
