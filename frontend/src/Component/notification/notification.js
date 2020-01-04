@@ -13,7 +13,7 @@ const successLoginNotification = () => {
   const failLoginNotification = (message) => {
     notification.open({
       message: 'เข้าสู่ระบบผิดพลาด',
-      description: 'โปรดตรวจสอบนามแฝงและรหัสผ่าน',
+      description: 'โปรดตรวจสอบชื่อผู้ใช้งานและรหัสผ่าน',
       icon: <Icon type="close" style={{ color: '#dc4d4d' }} />,
     });
   };
@@ -61,5 +61,12 @@ const successLoginNotification = () => {
     });
   };
 
+  const confirmCreateUserNotification = (message) => {
+    notification.open({
+      message: 'สมัครผู้ใช้งานสำเร็จ',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
 
- export  {successLoginNotification,failLoginNotification,successCreatePatientNotification,patientNotfoundNotification,successfoundNotification,duplicatePatientNotification,confirmDoctorNotification,sendPatientfoundNotification}
+
+ export  {confirmCreateUserNotification ,successLoginNotification,failLoginNotification,successCreatePatientNotification,patientNotfoundNotification,successfoundNotification,duplicatePatientNotification,confirmDoctorNotification,sendPatientfoundNotification}

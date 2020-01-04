@@ -83,7 +83,7 @@ class Login extends Component {
                     <Form.Item>
                       {getFieldDecorator("username", {
                         rules: [
-                          { required: true, message: "โปรดใส่นามแฝงของคุณ!" }
+                          { required: true, message: "โปรดใส่ชื่อผู้ใช้งานของคุณ!" }
                         ]
                       })(
                         <Input
@@ -96,7 +96,7 @@ class Login extends Component {
                               style={{ color: "rgba(0,0,0,.25)" }}
                             />
                           }
-                          placeholder="นามแฝง"
+                          placeholder="ชื่อผู้ใช้งาน"
                         />
                       )}
                     </Form.Item>

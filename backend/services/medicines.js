@@ -31,6 +31,20 @@ module.exports = (app, db) => {
   });
 
 
+  app.post("/getspacificmedicine",passport.authenticate('jwt', { session: false }), function(req, res) {
+    db.medicines
+      .findAll({
+        where: { name: req.body.name}
+      })
+      .then(result => {
+        res.status(201).send(result);
+      })
+      .catch(err => {
+        res.status(400).send({ message: err.message });
+      });
+  });
+  
+
   app.post("/getinvoicemedicine",passport.authenticate('jwt', { session: false }), function(req, res) {
     db.medicines
       .findAll({
@@ -43,6 +57,8 @@ module.exports = (app, db) => {
         res.status(400).send({ message: err.message });
       });
   });
+
+
   
   
   app.get('/protected-route', passport.authenticate('jwt', { session: false }),
