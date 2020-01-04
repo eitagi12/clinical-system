@@ -54,6 +54,18 @@ export default class DrugAndFinance extends Component {
     return total;
   }
 
+  handleCreatePaidInvoice = () =>{
+    Axios.post("/createpaidinvoice", {
+      firstname: this.state.conclusionFinanceData[0].firstname,
+      lastname: this.state.conclusionFinanceData[0].lastname,
+      total: this.state.totalPrice 
+    }).then(result => {
+      console.log(result.data)
+    }).catch(err => {
+      console.log(err)})
+  };
+  
+
   render() {
     return (
       <div>
@@ -189,50 +201,6 @@ export default class DrugAndFinance extends Component {
                         </Col>
                       )}
                     </Row>
-                    {/* <Descriptions.Item label="ชื่อผู้ป่วย">
-                      นายเมธา
-                    </Descriptions.Item>
-                    <Descriptions.Item label="นามสกุลผู้ป่วย" span={2}>
-                      บ้าไปแล้ว
-                    </Descriptions.Item>
-
-                    <Descriptions.Item label="แพทย์ผู้ตรวจ">
-                      นายนัท สุดยอดหมอขั้นเทพ
-                    </Descriptions.Item>
-                    <Descriptions.Item label="เลขที่">
-                      21145
-                    </Descriptions.Item>
-                    <Descriptions.Item label="วันที่รับการรักษา">
-                      20/12/2562
-                    </Descriptions.Item>
-
-
-                    
-                    <Descriptions.Item label="รายการ">
-                          พาราเซตตามอล<br/>
-                          พาราเซตตามอล<br/>
-                          พาราเซตตามอล<br/>
-                          พาราเซตตามอล<br/>
-                          
-                    </Descriptions.Item>
-                    <Descriptions.Item label="จำนวน">
-                    5<br/>
-                    2<br/>
-                    1<br/>
-                    2<br/>
-                    </Descriptions.Item>
-                    <Descriptions.Item label="จำนวนเงิน">
-                      50<br/>
-                      20<br/>
-                      10<br/>
-                      20<br/>
-                    </Descriptions.Item>
-                    <Descriptions.Item label="จำนวนเงิน">
-                      รวมทั้งสิ้น
-                    </Descriptions.Item>
-                    <Descriptions.Item label="100" span={2}>
-                      100 บาทถ้วน
-                    </Descriptions.Item> */}
                   </Card>
                 </Col>
               </Row>
@@ -240,9 +208,9 @@ export default class DrugAndFinance extends Component {
                 <Col span={9}></Col>
                 <Col span={9}></Col>
                 <Col span={4} style={{ margin: "10px" }}>
-                  <Link to="/purchased">
-                    <Button type="primary">ยืนยันการชำระเงิน</Button>
-                  </Link>
+                  
+                    <Button onClick={this.handleCreatePaidInvoice} type="primary">ยืนยันการชำระเงิน</Button>
+                  
                 </Col>
               </Row>
 
@@ -261,7 +229,7 @@ export default class DrugAndFinance extends Component {
               >
                 <Col>
                   <Link to="/login">
-                    <Button>กลับหน้าเข้าสู่ระบบ</Button>
+                    <Button >กลับหน้าเข้าสู่ระบบ</Button>
                   </Link>
                 </Col>
               </Row>

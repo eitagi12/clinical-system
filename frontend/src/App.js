@@ -1,37 +1,53 @@
 import React from "react";
 import { Layout } from "antd";
-import "./App.css";
-import { Route, Switch } from "react-router-dom";
-import WrappedNormalLoginForm from "./Component/loginpage/Login";
-import DrugAndFinance from "./Component/nursepage/DrugAndFinance";
-import PatientPersonalData from "./Component/nursepage/PatientPersonalData";
-import PurchasedResult from "./Component/nursepage/PurchasedResult";
-import CreatePatient from "./Component/nursepage/CreatePatient";
-import Doctor from "./Component/doctorpage/Doctor";
-import Admin from "./Component/admin/Admin";
-import ManageUser from "./Component/admin/ManageUser";
-import ManageDrug from "./Component/admin/ManageDrug"
-const { Content } = Layout;
+import { Switch, withRouter } from "react-router-dom";
+import PrivateRoute from "./Component/routes/PrivateRoutes";
+import jwtDecode from "jwt-decode";
+import NavBar from "./Component/navbar/NavBar";
 
-function App() {
-  return (
-    <div>
-      <Content>
-        <Switch>
-          <Route exact path="/" component={WrappedNormalLoginForm} />
-          <Route exact path="/login" component={WrappedNormalLoginForm} />
-          <Route exact path="/nursedrug" component={DrugAndFinance} />
-          <Route exact path="/nursepatient" component={PatientPersonalData} />
-          <Route exact path="/purchased" component={PurchasedResult} />
-          <Route exact path="/createpatient" component={CreatePatient} />
-          <Route exact path="/doctor" component={Doctor} />
-          <Route exact path="/admin" component={Admin} />
-          <Route exact path="/manageuser" component={ ManageUser } />
-          <Route exact path="/managedrug" component={ ManageDrug } />
-        </Switch>
-      </Content>
-    </div>
-  );
+import "./App.css";
+
+const { Content, Header } = Layout;
+
+class App extends React.Component {
+  logout = () => {
+    localStorage.removeItem("Access_TOKEN");
+    this.props.history.push("/login");
+  };
+
+  login = () => {
+    localStorage.setItem("Access_TOKEN");
+  };
+
+  getUser = () => {
+    const token = localStorage.getItem("Access_TOKEN");
+    if (!token) {
+      return {
+        role: 'admin'
+      };
+    }
+    let user = jwtDecode(token);
+    return user;
+  };
+
+  render() {
+    let user = this.getUser();
+    console.log(user);
+    return (
+      <div>
+        <Layout>
+          <Header>
+            <NavBar logout={this.logout} />
+          </Header>
+          <Content>
+            <Switch>
+              <PrivateRoute role={user.role} />
+            </Switch>
+          </Content>
+        </Layout>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withRouter(App);

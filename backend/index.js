@@ -35,7 +35,7 @@ db.sequelize.sync({ alter: true }).then(() => {
   medicinesService(app, db);
   medicinesInvoicesService(app, db)
   invoicesService(app, db);
-  // paidInvoiceService(app, db)
+  paidInvoiceService(app, db)
 
 
   app.listen(8080, () => console.log("Server is running on port 8080"))

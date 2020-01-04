@@ -1,10 +1,21 @@
 import React, { Component } from "react";
-import { Col, Layout, Row, Menu, Button, Card, Form, Input, Icon, DatePicker, Select, List } from "antd";
+import {
+  Col,
+  Layout,
+  Row,
+  Menu,
+  Button,
+  Card,
+  Form,
+  Input,
+  Icon,
+  DatePicker,
+  Select,
+  List
+} from "antd";
 import { Link } from "react-router-dom";
 import Axios from "../../config/axios.setup";
-import {
-  confirmCreateUserNotification
-} from "../../Component/notification/notification";
+import { confirmCreateUserNotification } from "../../Component/notification/notification";
 
 const { Footer } = Layout;
 
@@ -12,7 +23,7 @@ class ManageUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      allUser:[],
+      allUser: [],
       birthDay: "",
       role: ""
     };
@@ -27,7 +38,6 @@ class ManageUser extends Component {
     });
   };
 
-
   componentDidMount() {
     this.fetchData();
     var intervalId = setInterval(this.fetchData, 5000);
@@ -40,13 +50,11 @@ class ManageUser extends Component {
     clearInterval(this.state.intervalId);
   }
 
-
-
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, value) => {
       if (!err) {
-        let payload= {
+        let payload = {
           username: value.username,
           password: value.password,
           firstname: value.firstName,
@@ -55,19 +63,25 @@ class ManageUser extends Component {
           address: value.address,
           phone_number: value.phoneNumber,
           role: this.state.role
-        }
-    Axios.post("/registerUser", payload) 
-      .then(result => {
-        console.log(result.data);
-        confirmCreateUserNotification()
-        this.props.form.resetFields();
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  }
-})
-  }
+        };
+        Axios.post("/registerUser", payload)
+          .then(result => {
+            console.log(result.data);
+            confirmCreateUserNotification();
+            this.props.form.resetFields();
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
+    });
+  };
+
+  handleDeleteUser = id => {
+    Axios.delete(`/deleteuser/${id}`).then(result => {   
+    }) 
+  };
+  
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -75,28 +89,6 @@ class ManageUser extends Component {
       <div>
         <div>
           <Row>
-            <Col className="leftBar" span={3}>
-              <Menu
-                onClick={this.handleClick}
-                style={{ width: "auto" }}
-                defaultSelectedKeys={["2"]}
-                defaultOpenKeys={["sub1"]}
-                mode="inline"
-              >
-                <Menu.ItemGroup key="g2">
-                  <Menu.Item key="1" style={{ fontSize: "20px" }}>
-                    หน้าหลัก<Link to="/admin"></Link>
-                  </Menu.Item>
-                  <Menu.Item key="2" style={{ fontSize: "20px" }}>
-                    จัดการผู้ใช้งาน
-                  </Menu.Item>
-                  <Menu.Item key="3" style={{ fontSize: "20px" }}>
-                    จัดการยา <Link to="/managedrug"></Link>
-                  </Menu.Item>
-                </Menu.ItemGroup>
-              </Menu>
-            </Col>
-
             <Col className="content" span={18}>
               <Row>
                 <Col>
@@ -113,7 +105,6 @@ class ManageUser extends Component {
                   <Row>
                     <Col span={12}>
                       <Card>
-                      
                         <List
                           size="large"
                           header={<h1>รายชื่อผู้ใช้งาน</h1>}
@@ -129,10 +120,10 @@ class ManageUser extends Component {
                                 <Col span={3}>
                                   <Button
                                     onClick={() =>
-                                      this.handleShowConAlluser(item.id)
+                                      this.handleDeleteUser(item.id)
                                     }
                                   >
-                                   X
+                                    X
                                   </Button>
                                 </Col>
                               </List.Item>
@@ -165,7 +156,6 @@ class ManageUser extends Component {
                                 ]
                               })(
                                 <Input
-                                  
                                   prefix={
                                     <Icon
                                       type="user"
@@ -306,7 +296,7 @@ class ManageUser extends Component {
                           </Col>
                           <Col span={12} style={{ marginLeft: "10px" }}>
                             <Form.Item>
-                              {getFieldDecorator("phoneNumber",{
+                              {getFieldDecorator("phoneNumber", {
                                 rules: [
                                   {
                                     required: true,
@@ -328,32 +318,35 @@ class ManageUser extends Component {
                           </Col>
                           <Col span={12} style={{ marginLeft: "10px" }}>
                             <Form.Item>
-                            <Select
-                            onChange={value =>
-                              this.setState({ role: `${value}` })
-                            }
-                            style={{ width: 120 }}
-                            placeholder="โปรดเลือก"
-                          >
-                            <Select.Option value="nurse">พยาบาล</Select.Option>
-                            <Select.Option value="doctor">หมอ</Select.Option>
-                            <Select.Option value="admin">แอดมิน</Select.Option>
-                            
-                            
-                          </Select>
+                              <Select
+                                onChange={value =>
+                                  this.setState({ role: `${value}` })
+                                }
+                                style={{ width: 120 }}
+                                placeholder="โปรดเลือก"
+                              >
+                                <Select.Option value="nurse">
+                                  พยาบาล
+                                </Select.Option>
+                                <Select.Option value="doctor">
+                                  หมอ
+                                </Select.Option>
+                                <Select.Option value="admin">
+                                  แอดมิน
+                                </Select.Option>
+                              </Select>
                             </Form.Item>
                           </Col>
                         </Row>
                         {/* ---------------------- */}
                         {/* -----------Submit----------- */}
                         <Row style={{ fontSize: "20px" }}>
-                          
                           <Col span={24} style={{ textAlign: "center" }}>
-                          <Form.Item>
-                            <Button type="primary" htmlType="submit">
-                              ยืนยัน
-                            </Button>
-                          </Form.Item>
+                            <Form.Item>
+                              <Button type="primary" htmlType="submit">
+                                ยืนยัน
+                              </Button>
+                            </Form.Item>
                           </Col>
                         </Row>
                         {/* ---------------------- */}
@@ -379,9 +372,6 @@ class ManageUser extends Component {
                 }}
               >
                 <Col>
-                  <Link to="/login">
-                    <Button>กลับหน้าเข้าสู่ระบบ</Button>
-                  </Link>
                 </Col>
               </Row>
             </Col>
