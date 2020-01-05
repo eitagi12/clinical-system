@@ -170,7 +170,7 @@ class ManageDrug extends Component {
                                     message: "โปรดใส่ชื่อยา!"
                                   }
                                 ]
-                              })(<Input placeholder="โปรดใส่ชื่อยา" />)}
+                              })(<Input placeholder="ชื่อยา" />)}
                             </Form.Item>
                           </Col>
                         </Row>
@@ -192,7 +192,7 @@ class ManageDrug extends Component {
                                     message: "โปรดใส่ประเภทยา!"
                                   }
                                 ]
-                              })(<Input placeholder="โปรดใส่ประเภทยา" />)}
+                              })(<Input placeholder="ประเภทยา" />)}
                             </Form.Item>
                           </Col>
                         </Row>
@@ -203,7 +203,7 @@ class ManageDrug extends Component {
                             span={7}
                             style={{ marginLeft: "10px", textAlign: "right" }}
                           >
-                            <span>ราคา : </span>
+                            <span>ราคา/หน่วย : </span>
                           </Col>
                           <Col span={12} style={{ marginLeft: "10px" }}>
                             <Form.Item>
@@ -214,7 +214,7 @@ class ManageDrug extends Component {
                                     message: "โปรดใส่ราคาของยา!"
                                   }
                                 ]
-                              })(<Input placeholder="โปรดใส่ราคาของยา" />)}
+                              })(<Input placeholder="ราคา" />)}
                             </Form.Item>
                           </Col>
                         </Row>

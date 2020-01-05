@@ -191,7 +191,7 @@ class ManageUser extends Component {
                                       style={{ color: "rgba(0,0,0,.25)" }}
                                     />
                                   }
-                                  placeholder="โปรดใส่ชื่อผู้ใช้งาน"
+                                  placeholder="ชื่อผู้ใช้งาน"
                                 />
                               )}
                             </Form.Item>
@@ -223,7 +223,7 @@ class ManageUser extends Component {
                                     />
                                   }
                                   type="password"
-                                  placeholder="โปรดใส่รหัสผ่าน"
+                                  placeholder="รหัสผ่าน"
                                 />
                               )}
                             </Form.Item>
@@ -246,7 +246,7 @@ class ManageUser extends Component {
                                     message: "โปรดใส่ชื่อของคุณ!"
                                   }
                                 ]
-                              })(<Input placeholder="โปรดใส่ชื่อ" />)}
+                              })(<Input placeholder="ชื่อ" />)}
                             </Form.Item>
                           </Col>
                         </Row>
@@ -268,7 +268,7 @@ class ManageUser extends Component {
                                     message: "โปรดใส่นามสกุลของคุณ!"
                                   }
                                 ]
-                              })(<Input placeholder="โปรดใส่นามสกุล" />)}
+                              })(<Input placeholder="นามสกุล" />)}
                             </Form.Item>
                           </Col>
                         </Row>
@@ -310,7 +310,7 @@ class ManageUser extends Component {
                                     message: "โปรดใส่ที่อยู่ของคุณ!"
                                   }
                                 ]
-                              })(<Input placeholder="โปรดใส่ที่อยู่" />)}
+                              })(<Input placeholder="ที่อยู่" />)}
                             </Form.Item>
                           </Col>
                         </Row>
@@ -332,7 +332,7 @@ class ManageUser extends Component {
                                     message: "โปรดใส่เบอร์โทรศัพท์ของคุณ!"
                                   }
                                 ]
-                              })(<Input placeholder="โปรดใส่เบอร์โทรศัพท์" />)}
+                              })(<Input placeholder="เบอร์โทรศัพท์" />)}
                             </Form.Item>
                           </Col>
                         </Row>
@@ -352,7 +352,7 @@ class ManageUser extends Component {
                                   this.setState({ role: `${value}` })
                                 }
                                 style={{ width: 120 }}
-                                placeholder="โปรดเลือก"
+                                placeholder="เลือก"
                               >
                                 <Select.Option value="nurse">
                                   พยาบาล

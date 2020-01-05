@@ -238,6 +238,20 @@ class Doctor extends Component {
                                 </Row>
                                 <hr />
                                 <Row>
+                                  <Col span={12}><span>ส่วนสูง</span>{" "}
+                                    {x.height}<span>เซนติเมตร</span></Col>
+                                  <Col span={12}><span>น้ำหนัก</span>{" "}
+                                    {x.weight}<span>กิโลกรัม</span></Col>
+                                </Row>
+
+                                <Row>
+                                  <Col span={12}><span>ความดัน</span>{" "}
+                                    {x.pressure}</Col>
+                                  <Col span={12}><span>อุณหภูมิ</span>{" "}
+                                    {x.temperature}<span>องศาเซลเซียส</span></Col>
+                                </Row>
+
+                                <Row>
                                   <Col span={12}>
                                     <span>โรคประจำตัว</span>{" "}
                                     {x.congenital_disease}
@@ -308,17 +322,21 @@ class Doctor extends Component {
                                           renderItem={item => (
                                             <Row>
                                               <Form.Item>
-                                                <List.Item>
-                                                  <Col span={10}>
+                                                <List.Item style={{padding:"0px",paddingTop:"5px",}}>
+                                                  <Col span={8}  style={{ paddingLeft: "20px" }}>
                                                     {item.name}
                                                   </Col>
+                                                  <Col span={4}>
+                                                  <span>จำนวน</span>
+                                                  </Col>
                                                   <Col
-                                                    span={10}
+                                                    span={8}
                                                     style={{
-                                                      textAlign: "center"
+                                                      textAlign: "center",
+                                                      padding:"0px"
                                                     }}
                                                   >
-                                                    <span>จำนวน</span>
+                                                    
                                                     {getFieldDecorator(
                                                       "" + item.id,
                                                       {
@@ -332,10 +350,7 @@ class Doctor extends Component {
                                                       }
                                                     )(
                                                       <Input
-                                                        style={{
-                                                          width: "50%",
-                                                          marginLeft: "10px"
-                                                        }}
+                                                        
                                                       />
                                                     )}
                                                   </Col>
