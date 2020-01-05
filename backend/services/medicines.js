@@ -30,6 +30,19 @@ module.exports = (app, db) => {
       });
   });
 
+  app.delete("/deletemedicine/:id", function(req, res) {
+    db.medicines
+      .destroy({
+        where: { id: req.params.id }
+      })
+      .then(results => {
+        res.status(200).send("Delete La");
+      })
+      .catch(err => {
+        res.status(400).send({ message: err.message });
+      });
+  });
+
 
   app.post("/getspacificmedicine",passport.authenticate('jwt', { session: false }), function(req, res) {
     db.medicines

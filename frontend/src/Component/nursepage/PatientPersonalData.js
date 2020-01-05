@@ -101,13 +101,18 @@ class PatientPersonalData extends Component {
           .then(result => {
             console.log(result.data);
             this.props.form.resetFields();
-            sendPatientfoundNotification()
+            sendPatientfoundNotification();
           })
           .catch(err => {
             console.error(err);
           });
       }
     });
+  };
+
+  handleLogout = () => {
+    localStorage.removeItem("Access_TOKEN");
+    this.props.history.push("/login");
   };
 
   render() {
@@ -190,7 +195,7 @@ class PatientPersonalData extends Component {
                   <div className="patientListBox">
                     <List
                       size="large"
-                      header={<h1>รายชื่อผู้ป่วย</h1>}
+                      header={<h1>ผลการค้นหา</h1>}
                       bordered
                       dataSource={this.state.patientData}
                       renderItem={item => (
@@ -391,9 +396,9 @@ class PatientPersonalData extends Component {
                 }}
               >
                 <Col>
-                  <Link to="/login">
-                    <Button>กลับหน้าเข้าสู่ระบบ</Button>
-                  </Link>
+                  <Button onClick={this.handleLogout}>
+                    กลับหน้าเข้าสู่ระบบ
+                  </Button>
                 </Col>
               </Row>
             </Col>

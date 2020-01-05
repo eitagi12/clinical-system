@@ -29,19 +29,25 @@ class Login extends Component {
           successLoginNotification();
           console.log(result.data);
           localStorage.setItem("Access_TOKEN", result.data.token);
-          this.props.history.push("/nursepatient");
+          this.props.history.push("/nursepatient")
+          window.location.reload(true);
         } else if (result.data.role === "doctor") {
           console.log(result);
           successLoginNotification();
           console.log(result.data);
           localStorage.setItem("Access_TOKEN", result.data.token);
-          this.props.history.push("/doctor");
-        } else {
+          this.props.history.push("/doctor")
+          window.location.reload(true);
+        } else if (result.data.role === "admin") {
           console.log(result);
           successLoginNotification();
           console.log(result.data);
           localStorage.setItem("Access_TOKEN", result.data.token);
-          this.props.history.push("/admin");
+          this.props.history.push("/manageuser")
+          window.location.reload(true);
+        }else {
+          this.props.history.push("/login")
+          window.location.reload(true);
         }
       })
       .catch(err => {

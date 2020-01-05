@@ -11,7 +11,6 @@ import {
   Select,
   Form
 } from "antd";
-import { Link } from "react-router-dom";
 import Axios from "../../config/axios.setup";
 import { confirmDoctorNotification } from "../notification/notification.js";
 
@@ -102,8 +101,8 @@ class Doctor extends Component {
           medicinesList.push({
             id: key,
             amount: data[key]
-          });
-        });
+          })
+        })
 
         console.log(medicinesList);
 
@@ -114,6 +113,7 @@ class Doctor extends Component {
           medicinesList: medicinesList
         })
           .then(result => {
+            
             Axios.delete(
               `http://localhost:8080/deletepatientcase/${this.state.currentPatientId}`
             );
@@ -123,16 +123,33 @@ class Doctor extends Component {
               selectedMedicineData: [],
               currentPatientId: null
             });
-
+            this.fetchData();
+            
             console.log(result.data);
             console.log(this.state.selectedMedicineData);
             confirmDoctorNotification();
+            
           })
           .catch(err => {
             console.log(err);
           });
       }
     });
+  };
+
+
+  handleDeleteMedicine = item =>{
+    const data = this.state.selectedMedicineData.filter(i => i.id !== item.id)
+    console.log(this.state.selectedMedicineData)
+    console.log(item);
+    this.setState({
+      selectedMedicineData: data
+    })
+  }
+
+  handleLogout = () => {
+    localStorage.removeItem("Access_TOKEN");
+    this.props.history.push("/login");
   };
 
   render() {
@@ -292,11 +309,11 @@ class Doctor extends Component {
                                             <Row>
                                               <Form.Item>
                                                 <List.Item>
-                                                  <Col span={12}>
+                                                  <Col span={10}>
                                                     {item.name}
                                                   </Col>
                                                   <Col
-                                                    span={12}
+                                                    span={10}
                                                     style={{
                                                       textAlign: "center"
                                                     }}
@@ -309,7 +326,7 @@ class Doctor extends Component {
                                                           {
                                                             required: true,
                                                             message:
-                                                              "Please input amount"
+                                                              "โปรดใส่จำนวนยา"
                                                           }
                                                         ]
                                                       }
@@ -322,6 +339,7 @@ class Doctor extends Component {
                                                       />
                                                     )}
                                                   </Col>
+                                                  <Col span={4} onClick={this.handleDeleteMedicine.bind(this,item)} ><Button>X</Button></Col>
                                                 </List.Item>
                                               </Form.Item>
                                             </Row>
@@ -367,9 +385,9 @@ class Doctor extends Component {
                 }}
               >
                 <Col>
-                  <Link to="/login">
-                    <Button>กลับหน้าเข้าสู่ระบบ</Button>
-                  </Link>
+                  <Button onClick={this.handleLogout}>
+                    กลับหน้าเข้าสู่ระบบ
+                  </Button>
                 </Col>
               </Row>
             </Col>

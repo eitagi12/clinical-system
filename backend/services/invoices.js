@@ -31,6 +31,20 @@ module.exports = (app, db) => {
       });
   });
 
+
+  app.delete("/deleteinvoice/:id", function(req, res) {
+    db.invoices
+      .destroy({
+        where: { id: req.params.id }
+      })
+      .then(results => {
+        res.status(200).send("Delete La");
+      })
+      .catch(err => {
+        res.status(400).send({ message: err.message });
+      });
+  });
+
   app.get('/protected-route', passport.authenticate('jwt', { session: false }),
     function (req, res) {
       res.status(200).send(req.user)

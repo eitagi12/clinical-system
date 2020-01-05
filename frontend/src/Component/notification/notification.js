@@ -68,5 +68,19 @@ const successLoginNotification = () => {
     });
   };
 
+  const confirmCreateMedicinesNotification = (message) => {
+    notification.open({
+      message: 'เพิ่มยาสำเร็จ',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
 
- export  {confirmCreateUserNotification ,successLoginNotification,failLoginNotification,successCreatePatientNotification,patientNotfoundNotification,successfoundNotification,duplicatePatientNotification,confirmDoctorNotification,sendPatientfoundNotification}
+  const confirmPaidInvoiceNotification = (message) => {
+    notification.open({
+      message: 'ชำระเงินสำเร็จแล้ว',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
+
+
+ export  {confirmPaidInvoiceNotification,confirmCreateMedicinesNotification,confirmCreateUserNotification ,successLoginNotification,failLoginNotification,successCreatePatientNotification,patientNotfoundNotification,successfoundNotification,duplicatePatientNotification,confirmDoctorNotification,sendPatientfoundNotification}

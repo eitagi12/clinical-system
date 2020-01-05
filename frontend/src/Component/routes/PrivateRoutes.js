@@ -10,7 +10,7 @@ class PrivateRoutes extends Component {
     redirectRoutes: []
   };
 
-  componentWillMount() {
+  componentDidMount() {
     let role = this.props.role;
     console.log(this.state.redirectRoutes);
     if (role) {

@@ -69,6 +69,7 @@ class ManageUser extends Component {
             console.log(result.data);
             confirmCreateUserNotification();
             this.props.form.resetFields();
+            this.fetchData();
           })
           .catch(err => {
             console.error(err);
@@ -78,10 +79,19 @@ class ManageUser extends Component {
   };
 
   handleDeleteUser = id => {
-    Axios.delete(`/deleteuser/${id}`).then(result => {   
-    }) 
+    Axios.delete(`/deleteuser/${id}`).then(result => {})
+    .then(result => {
+      
+      this.fetchData();
+    }).catch(err => {
+      console.error(err);
+    });
   };
-  
+
+  handleLogout = () => {
+    localStorage.removeItem("Access_TOKEN");
+    this.props.history.push("/login");
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -89,6 +99,25 @@ class ManageUser extends Component {
       <div>
         <div>
           <Row>
+            <Col className="leftBar" span={3}>
+              <Menu
+                onClick={this.handleClick}
+                style={{ width: "auto" }}
+                defaultSelectedKeys={["2"]}
+                defaultOpenKeys={["sub1"]}
+                mode="inline"
+              >
+                <Menu.ItemGroup key="g2">
+                  <Menu.Item key="2" style={{ fontSize: "20px" }}>
+                    จัดการผู้ใช้งาน <Link to="/manageuser"></Link>
+                  </Menu.Item>
+                  <Menu.Item key="3" style={{ fontSize: "20px" }}>
+                    จัดการยา <Link to="/managedrug"></Link>
+                  </Menu.Item>
+                </Menu.ItemGroup>
+              </Menu>
+            </Col>
+
             <Col className="content" span={18}>
               <Row>
                 <Col>
@@ -113,9 +142,9 @@ class ManageUser extends Component {
                           renderItem={item => (
                             <Row>
                               <List.Item>
-                                <Col span={2}>{item.id}</Col>
-                                <Col span={7}>{item.firstname}</Col>
-                                <Col span={7}>{item.lastname}</Col>
+                                
+                                <Col span={8}>{item.firstname}</Col>
+                                <Col span={8}>{item.lastname}</Col>
                                 <Col span={5}>{item.role}</Col>
                                 <Col span={3}>
                                   <Button
@@ -372,6 +401,9 @@ class ManageUser extends Component {
                 }}
               >
                 <Col>
+                  <Button onClick={this.handleLogout}>
+                    กลับหน้าเข้าสู่ระบบ
+                  </Button>
                 </Col>
               </Row>
             </Col>

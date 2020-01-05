@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, Layout, Menu, List, Button, Card } from "antd";
 import { Link } from "react-router-dom";
 import Axios from "../../config/axios.setup";
+import { confirmPaidInvoiceNotification } from "../notification/notification"
 const { Footer } = Layout;
 
 export default class DrugAndFinance extends Component {
@@ -54,17 +55,33 @@ export default class DrugAndFinance extends Component {
     return total;
   }
 
-  handleCreatePaidInvoice = () =>{
+  handleCreatePaidInvoice = () => {
     Axios.post("/createpaidinvoice", {
       firstname: this.state.conclusionFinanceData[0].firstname,
       lastname: this.state.conclusionFinanceData[0].lastname,
-      total: this.state.totalPrice 
-    }).then(result => {
-      console.log(result.data)
-    }).catch(err => {
-      console.log(err)})
+      total: this.state.totalPrice
+    })
+      .then(result => {
+        confirmPaidInvoiceNotification()
+        console.log("dsfsdfdf", this.state.conclusionFinanceData[0].id);
+        const id = this.state.conclusionFinanceData[0].id;
+        Axios.delete(`/deleteinvoice/${id}`);
+        this.setState({ 
+          conclusionFinanceData: [],
+        })
+        this.fetchData();
+        
+        
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
-  
+
+  handleLogout = () => {
+    localStorage.removeItem("Access_TOKEN");
+    this.props.history.push("/login");
+  };
 
   render() {
     return (
@@ -164,7 +181,7 @@ export default class DrugAndFinance extends Component {
                               <h3>รายการจ่ายยา</h3>
                             </Col>
                           </Row>
-                          <Row>
+                          <Row style={{ color: "#509BE4" }}>
                             <Col span={6}>ชื่อยา</Col>
                             <Col span={6}>จำนวน</Col>
                             <Col span={6}>ราคาต่อหน่วย</Col>
@@ -208,9 +225,9 @@ export default class DrugAndFinance extends Component {
                 <Col span={9}></Col>
                 <Col span={9}></Col>
                 <Col span={4} style={{ margin: "10px" }}>
-                  
-                    <Button onClick={this.handleCreatePaidInvoice} type="primary">ยืนยันการชำระเงิน</Button>
-                  
+                  <Button onClick={this.handleCreatePaidInvoice} type="primary">
+                    ยืนยันการชำระเงิน
+                  </Button>
                 </Col>
               </Row>
 
@@ -228,9 +245,9 @@ export default class DrugAndFinance extends Component {
                 }}
               >
                 <Col>
-                  <Link to="/login">
-                    <Button >กลับหน้าเข้าสู่ระบบ</Button>
-                  </Link>
+                  <Button onClick={this.handleLogout}>
+                    กลับหน้าเข้าสู่ระบบ
+                  </Button>
                 </Col>
               </Row>
             </Col>

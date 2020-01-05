@@ -23,10 +23,6 @@ const components = {
     url: "/doctor"
   },
   ///////// Admin Component ////////
-  admin: {
-    component: "Admin",
-    url: "/admin"
-  },
   manageuser: {
     component: "ManageUser",
     url: "/manageuser"
@@ -41,7 +37,7 @@ export default {
   //role name as a key.
   admin: {
     routes: [...Object.values(components)],
-    redirect: ['/admin']
+    redirect: ['/manageuser']
   },
   nurse: {
     routes: [
@@ -58,5 +54,11 @@ export default {
         components.login
     ],
     redirect: ['/doctor']
+  },
+  guest: {
+    routes: [
+      components.login
+    ],
+    redirect: ['/login']
   }
 };
