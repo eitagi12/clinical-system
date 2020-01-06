@@ -13,7 +13,7 @@ const successLoginNotification = () => {
   const failLoginNotification = (message) => {
     notification.open({
       message: 'เข้าสู่ระบบผิดพลาด',
-      description: 'โปรดตรวจสอบนามแฝงและรหัสผ่าน',
+      description: 'โปรดตรวจสอบชื่อผู้ใช้งานและรหัสผ่าน',
       icon: <Icon type="close" style={{ color: '#dc4d4d' }} />,
     });
   };
@@ -40,6 +40,47 @@ const successLoginNotification = () => {
     });
   };
 
+  const sendPatientfoundNotification = (message) => {
+    notification.open({
+      message: 'ส่งผู้ป่วยเข้าห้องตรวจเรียบร้อย',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
+
+  const duplicatePatientNotification = (message) => {
+    notification.open({
+      message: 'มีชื่อผู้ป่วยนี้ในรายชื่อแล้ว',
+      icon: <Icon type="close" style={{ color: '#dc4d4d' }} />,
+    });
+  };
+
+  const confirmDoctorNotification = (message) => {
+    notification.open({
+      message: 'ยืนยันการตรวจสำเร็จ',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
+
+  const confirmCreateUserNotification = (message) => {
+    notification.open({
+      message: 'สมัครผู้ใช้งานสำเร็จ',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
+
+  const confirmCreateMedicinesNotification = (message) => {
+    notification.open({
+      message: 'เพิ่มยาสำเร็จ',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
+
+  const confirmPaidInvoiceNotification = (message) => {
+    notification.open({
+      message: 'ชำระเงินสำเร็จแล้ว',
+      icon: <Icon type="check" style={{ color: '#108ee9' }} />,
+    });
+  };
 
 
- export  {successLoginNotification,failLoginNotification,successCreatePatientNotification,patientNotfoundNotification,successfoundNotification}
+ export  {confirmPaidInvoiceNotification,confirmCreateMedicinesNotification,confirmCreateUserNotification ,successLoginNotification,failLoginNotification,successCreatePatientNotification,patientNotfoundNotification,successfoundNotification,duplicatePatientNotification,confirmDoctorNotification,sendPatientfoundNotification}

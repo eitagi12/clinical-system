@@ -1,33 +1,34 @@
 import React from "react";
-import { Layout } from "antd";
-import "./App.css";
-import { Route, Switch } from "react-router-dom";
-import WrappedNormalLoginForm from "./Component/loginpage/Login";
-import DrugAndFinance from "./Component/nursepage/DrugAndFinance";
-import PatientPersonalData from "./Component/nursepage/PatientPersonalData";
-import PurchasedResult from "./Component/nursepage/PurchasedResult";
-import CreatePatient from "./Component/nursepage/CreatePatient";
-import Doctor from "./Component/doctorpage/Doctor";
-const { Content } = Layout;
 
-function App() {
-  return (
-    <div>
-      <Content>
+import { Switch, withRouter } from "react-router-dom";
+import PrivateRoute from "./Component/routes/PrivateRoutes";
+import jwtDecode from "jwt-decode";
+
+import "./App.css";
+
+class App extends React.Component {
+  getUser = () => {
+    const token = localStorage.getItem("Access_TOKEN");
+    if (!token) {
+      return {
+        role: "guest"
+      };
+    }
+    let user = jwtDecode(token);
+    return user;
+  };
+
+  render() {
+    let user = this.getUser();
+    console.log(user);
+    return (
+      <div>
         <Switch>
-          {/* {user.role === "nurse" ? ( */}
-            <Route exact path="/" component={WrappedNormalLoginForm} />
-          {/* ) : null} */}
-          <Route exact path="/login" component={WrappedNormalLoginForm} />
-          <Route exact path="/nursedrug" component={DrugAndFinance} />
-          <Route exact path="/nursepatient" component={PatientPersonalData} />
-          <Route exact path="/purchased" component={PurchasedResult} />
-          <Route exact path="/createpatient" component={CreatePatient} />
-          <Route exact path="/doctor" component={Doctor} />
+          <PrivateRoute role={user.role} />
         </Switch>
-      </Content>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withRouter(App);
