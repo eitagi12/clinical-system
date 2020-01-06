@@ -139,9 +139,9 @@ class Login extends Component {
                   </Form>
                 </div>
               </div>
-              <Footer>
-                สงวนลิขสิทธิ์ © 2562 บริษัท นัทฮัฟเฟิลพัพ (ประเทศไทย) จำกัด
-              </Footer>
+              <Footer style={{ position: 'fixed', bottom:'0px', width:'100%'}}>
+                    สงวนลิขสิทธิ์ © 2562 บริษัท นัทฮัฟเฟิลพัพ (ประเทศไทย) จำกัด
+                  </Footer>
             </Col>
 
             <Col className="rightBar" span={3}></Col>

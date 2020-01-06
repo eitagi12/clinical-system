@@ -207,7 +207,7 @@ export default class DrugAndFinance extends Component {
                             <Col span={13}>
                               <span></span>
                             </Col>
-                            <Col span={3}>ยอดรวมสุทธิิ</Col>
+                            <Col span={3} style={{ color: "red" }}>ยอดรวมสุทธิิ</Col>
                             <Col span={3} style={{ textAlign: "center" }}>
                               <span>{this.state.totalPrice}</span>
                             </Col>
@@ -231,9 +231,9 @@ export default class DrugAndFinance extends Component {
                 </Col>
               </Row>
 
-              <Footer>
-                สงวนลิขสิทธิ์ © 2562 บริษัท นัทฮัฟเฟิลพัพ (ประเทศไทย) จำกัด
-              </Footer>
+              <Footer style={{ position: 'fixed', bottom:'0px', width:'100%'}}>
+                    สงวนลิขสิทธิ์ © 2562 บริษัท นัทฮัฟเฟิลพัพ (ประเทศไทย) จำกัด
+                  </Footer>
             </Col>
 
             <Col className="rightBar" span={3}>

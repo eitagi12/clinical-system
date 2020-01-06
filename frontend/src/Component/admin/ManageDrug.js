@@ -236,10 +236,9 @@ class ManageDrug extends Component {
                   </Row>
 
                   <Row>
-                    <Footer>
-                      สงวนลิขสิทธิ์ © 2562 บริษัท นัทฮัฟเฟิลพัพ (ประเทศไทย)
-                      จำกัด
-                    </Footer>
+                  <Footer style={{ position: 'fixed', bottom:'0px', width:'100%'}}>
+                    สงวนลิขสิทธิ์ © 2562 บริษัท นัทฮัฟเฟิลพัพ (ประเทศไทย) จำกัด
+                  </Footer>
                   </Row>
                 </Col>
               </Row>
