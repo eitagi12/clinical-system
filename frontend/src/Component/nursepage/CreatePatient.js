@@ -3,7 +3,7 @@ import { Row, Col, Menu, Input, Button, DatePicker, Select, Form, Layout } from 
 import { Link } from "react-router-dom";
 import Axios from "../../config/axios.setup";
 import { successCreatePatientNotification } from "../notification/notification.js";
-const { Footer } = Layout;
+// const { Footer } = Layout;
 
 // function handleChange(value) {
 //   console.log(`${value}`);
@@ -272,13 +272,7 @@ class CreatePatient extends Component {
               <Col span={8}>
               
               </Col>
-              <Row>
-                <Col>
-                <Footer style={{ position: 'fixed', bottom:'0px', width:'100%'}}>
-                    สงวนลิขสิทธิ์ © 2562 บริษัท นัทฮัฟเฟิลพัพ (ประเทศไทย) จำกัด
-                  </Footer>
-                </Col>
-              </Row>
+              
             </Col>
 
             <Col className="rightBar" span={3}></Col>
