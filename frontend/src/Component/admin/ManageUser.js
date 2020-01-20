@@ -30,7 +30,7 @@ class ManageUser extends Component {
   }
 
   fetchData = () => {
-    Axios.post("http://localhost:8080/getuser").then(result => {
+    Axios.post("/getuser").then(result => {
       this.setState({
         allUser: result.data
       });

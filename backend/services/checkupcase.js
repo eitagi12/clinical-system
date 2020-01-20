@@ -50,6 +50,16 @@ module.exports = (app, db) => {
       .catch(err => {
         res.status(400).send({ message: err.message });
       });
+
+      try {
+        let results = await db.checkupcase
+        .findAll({
+          where: { id: req.params.id }r
+        })
+        res.status(200).send(results);
+      } catch (err) {
+        res.status(400).send({ message: err.message });
+      }
   });
 
   app.delete("/deletepatientcase/:id",passport.authenticate('jwt', { session: false }), function(req, res) {

@@ -22,7 +22,7 @@ class Login extends Component {
     const username = this.state.username;
     const password = this.state.password;
     const role = this.state.role;
-    Axios.post("http://localhost:8080/loginUser", { username, password, role })
+    Axios.post("/loginUser", { username, password, role })
       .then(result => {
         if (result.data.role === "nurse") {
           console.log(result);

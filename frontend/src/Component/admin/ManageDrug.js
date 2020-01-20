@@ -15,7 +15,7 @@ class ManageDrug extends Component {
   }
 
   fetchData = () => {
-    Axios.post("http://localhost:8080/getmedicine").then(result => {
+    Axios.post("/getmedicine").then(result => {
       this.setState({
         allMedicine: result.data
       });
