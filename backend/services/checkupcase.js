@@ -52,9 +52,9 @@ module.exports = (app, db) => {
       });
 
       try {
-        let results = await db.checkupcase
+        let results =  db.checkupcase
         .findAll({
-          where: { id: req.params.id }r
+          where: { id: req.params.id }
         })
         res.status(200).send(results);
       } catch (err) {
