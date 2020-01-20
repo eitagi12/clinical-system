@@ -26,14 +26,6 @@ class PatientPersonalData extends Component {
     };
   }
 
-  // componentDidMount () {
-  //   Axios.get("http://localhost:8080/getpatients").then(result => {
-  //     this.setState({
-  //       data: result.data
-  //     });
-  //   });
-  // }
-
   handleShowPatientDetail = id => {
     console.log("errrrrrrrrrrrrr");
     Axios.get(`/patientDetail/${id}`).then(result => {

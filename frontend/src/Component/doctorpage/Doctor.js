@@ -34,7 +34,7 @@ class Doctor extends Component {
   }
 
   fetchData = () => {
-    Axios.post("http://localhost:8080/getcheckupcase").then(result => {
+    Axios.post("/getcheckupcase").then(result => {
       this.setState({
         waittingPatientData: result.data
       });
@@ -43,7 +43,7 @@ class Doctor extends Component {
   };
 
   fetchMedicine = () => {
-    Axios.post("http://localhost:8080/getmedicine").then(result => {
+    Axios.post("/getmedicine").then(result => {
       this.setState({
         medicinesData: result.data
       });
@@ -76,7 +76,7 @@ class Doctor extends Component {
   };
 
   handleAddMedicine = () => {
-    Axios.post("http://localhost:8080/getspacificmedicine", {
+    Axios.post("/getspacificmedicine", {
       name: this.state.nameMedicine
     })
       .then(result => {
@@ -106,7 +106,7 @@ class Doctor extends Component {
 
         console.log(medicinesList);
 
-        Axios.post("http://localhost:8080/createmedicineinvoice", {
+        Axios.post("/createmedicineinvoice", {
           firstname: this.state.conclusionPatientData[0].firstname,
           lastname: this.state.conclusionPatientData[0].lastname,
           diagnose: this.state.diagnose,
@@ -115,7 +115,7 @@ class Doctor extends Component {
           .then(result => {
             
             Axios.delete(
-              `http://localhost:8080/deletepatientcase/${this.state.currentPatientId}`
+              `/deletepatientcase/${this.state.currentPatientId}`
             );
             this.props.form.resetFields();
             this.setState({
