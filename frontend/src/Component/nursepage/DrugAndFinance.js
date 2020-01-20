@@ -16,7 +16,7 @@ export default class DrugAndFinance extends Component {
     };
   }
   fetchData = () => {
-    Axios.post("http://localhost:8080/getinvoices").then(result => {
+    Axios.post("/getinvoices").then(result => {
       this.setState({
         waittingFinance: result.data
       });
@@ -34,7 +34,7 @@ export default class DrugAndFinance extends Component {
   handleShowInvoicePatient = id => {
     console.log("errrrrrrrrrrrrr");
     console.log(id);
-    Axios.post("http://localhost:8080/getinvoicedetail", {
+    Axios.post("/getinvoicedetail", {
       invoiceId: id
     }).then(result => {
       this.setState(state => ({

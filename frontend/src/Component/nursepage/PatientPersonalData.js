@@ -52,7 +52,7 @@ class PatientPersonalData extends Component {
   }
 
   handleSearch = () => {
-    Axios.post("http://localhost:8080/getpatients", {
+    Axios.post("/getpatients", {
       firstname: this.state.firstName,
       lastname: this.state.lastName
     })
@@ -97,7 +97,7 @@ class PatientPersonalData extends Component {
           pressure: value.pressure
         };
         console.log(payload);
-        Axios.post("http://localhost:8080/createcheckupcase", payload)
+        Axios.post("/createcheckupcase", payload)
           .then(result => {
             console.log(result.data);
             this.props.form.resetFields();

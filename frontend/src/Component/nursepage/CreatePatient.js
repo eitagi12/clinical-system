@@ -40,7 +40,7 @@ class CreatePatient extends Component {
           allergic_medicine: value.medicineAllergic,
           blood_type: this.state.bloodType
         }
-    Axios.post("http://localhost:8080/createpatients", payload) 
+    Axios.post("/createpatients", payload) 
       
     
       .then(result => {
