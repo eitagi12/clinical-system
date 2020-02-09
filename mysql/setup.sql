@@ -1,0 +1,1 @@
+CREATE DATABASE clinical-system IF NOT EXISTS;

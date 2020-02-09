@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "nutbonus12",
+    "password": "123456789",
     "database": "clinical-system",
     "host": "127.0.0.1",
     "dialect": "mysql",

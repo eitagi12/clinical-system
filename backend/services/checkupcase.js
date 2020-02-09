@@ -39,8 +39,8 @@ module.exports = (app, db) => {
       });
   });
 
-  app.get("/getPatientDetail/:id",passport.authenticate('jwt', { session: false }), function(req, res) {
-    db.checkupcase
+  app.get("/getPatientDetail/:id", passport.authenticate('jwt', { session: false }), function (req, res) {
+    db.checkupcase 
       .findAll({
         where: { id: req.params.id }
       })
@@ -50,16 +50,6 @@ module.exports = (app, db) => {
       .catch(err => {
         res.status(400).send({ message: err.message });
       });
-
-      try {
-        let results =  db.checkupcase
-        .findAll({
-          where: { id: req.params.id }
-        })
-        res.status(200).send(results);
-      } catch (err) {
-        res.status(400).send({ message: err.message });
-      }
   });
 
   app.delete("/deletepatientcase/:id",passport.authenticate('jwt', { session: false }), function(req, res) {

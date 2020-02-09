@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-Axios.defaults.baseURL = 'http://35.198.251.177:8080'
+Axios.defaults.baseURL = 'http://103.74.255.224:8080'
 
 const UNPROTECTED_PATHS = [
     "login",
